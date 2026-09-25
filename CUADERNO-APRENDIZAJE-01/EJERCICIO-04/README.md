@@ -1,53 +1,53 @@
-# Ejercicio 03 - Ficha de perfil
+# Ejercicio 04 - Pantalla de acceso
 
 ## Qué he aprendido
-- **Control del eje principal con Flexbox (`flexDirection`)**:
-  - En React Native, el valor por defecto de `flexDirection` en cualquier contenedor `View` es `'column'` (a diferencia del estándar web CSS donde es `'row'`).
-  - Para alinear elementos en una fila horizontal contigua (uno al lado de otro), es necesario sobrescribir este comportamiento configurando explícitamente `flexDirection: 'row'`.
-- **Estructuración jerárquica de componentes**:
-  - Composición de un layout mixto: un contenedor padre en fila (`row` en `stats`) que a su vez aloja elementos hijos que se apilan verticalmente (`column` en cada `stat` para número y etiqueta).
-  - Manejo de espaciado limpio entre columnas mediante la propiedad `gap: 36`.
-- **Manejo de imágenes y avatares con el componente `Image`**:
-  - Uso de imágenes remotas a través de la propiedad `source={{ uri: '...' }}`.
-  - Creación de avatares perfectamente redondeados/circulares mediante la combinación de dimensiones simétricas fijas (`width`, `height`) y un `borderRadius` igual al 50% de su dimensión (en este caso, 110x110 con `borderRadius: 55`).
-- **Profundidad visual y sombras multiplataforma**:
-  - Implementación de sombras físicas con `elevation: 2` para dispositivos Android y `shadowColor`, `shadowOffset`, `shadowOpacity` y `shadowRadius` para iOS.
-- **Tipografía y coherencia estética**:
-  - Aplicación de fuentes personalizadas (*Google Sans Flex*) para jerarquizar el peso del nombre (`700Bold`), las métricas numéricas (`700Bold`) y los textos secundarios/etiquetas (`400Regular`).
+- **Manejo del componente `TextInput`**:
+  - Introducción a la captura de datos de entrada del usuario en React Native.
+  - Configuración de textos guía mediante la propiedad `placeholder` para indicar al usuario la información esperada.
+  - Aplicación de seguridad en campos confidenciales con la propiedad booleana `secureTextEntry`, ocultando los caracteres de la contraseña en pantalla mediante puntos/asteriscos por privacidad.
+- **Interacción y botones personalizados con `Pressable`**:
+  - Uso de `Pressable` frente al componente tradicional `Button` de React Native para obtener control total sobre el estilizado, esquinas redondeadas (`borderRadius`), márgenes y layout.
+- **Componentes no controlados (*Uncontrolled Components*) vs reactivos**:
+  - Comprensión de cómo el widget nativo subyacente del sistema operativo gestiona de forma autónoma el buffer de texto y los eventos del teclado en pantallas de presentación visual, sin necesidad de sincronización inmediata con React.
+- **Composición visual y ergonomía táctil**:
+  - Centrado vertical de la pantalla (`justifyContent: 'center'`) sobre fondo blanco limpio.
+  - Diseño de campos con estética tipo píldora (`borderRadius: 100`) y relleno interior (`paddingHorizontal: 18`, `paddingVertical: 14`) que maximizan la superficie de interacción táctil.
+  - Jerarquía tipográfica consistente utilizando pesos diferenciados (*Bold* para títulos y botones, *Regular* para subtítulos e inputs).
 
 ## Respuesta a la pregunta de comprensión
-Si quieres que dos estadísticas aparezcan una al lado de otra, ¿en qué View aplicarías `flexDirection: 'row'` y por qué?
+¿Por qué en este ejercicio no necesitamos todavía `useState`?
 
 **Respuesta:**  
-Se debe aplicar `flexDirection: 'row'` en el **`View` contenedor padre que agrupa las estadísticas** (en este proyecto, `<View style={styles.stats}>`), y **no** en cada estadística individual (`styles.stat`) ni en la tarjeta principal (`styles.card`).
+En este ejercicio no necesitamos todavía `useState` porque se trata de una **pantalla de maquetación estática de interfaz (UI Mockup)** donde los campos de texto funcionan como **componentes no controlados (*uncontrolled components*)**, y la aplicación no necesita almacenar, procesar ni sincronizar los datos introducidos con el ciclo de vida de React.
 
-**Justificación:**
-1. **Regla de dirección de Flexbox sobre hijos directos:** La propiedad `flexDirection` determina exclusivamente el flujo y la dirección en la que se ordenan los **hijos inmediatos** de ese contenedor. Para que los bloques de estadísticas se posicionen uno junto al otro de forma horizontal (de izquierda a derecha), la instrucción debe residir en el elemento padre que los envuelve a todos.
-2. **Comportamiento por defecto en React Native:** Como el valor por defecto en React Native es `flexDirection: 'column'`, si no declaramos `row` en el contenedor padre, cada estadística se apilará verticalmente hacia abajo ocupando una línea entera.
-3. **Preservación del layout vertical dentro de cada estadística:** Cada bloque de estadística está formado internamente por dos elementos: el valor numérico arriba y el texto descriptivo abajo. Si pusiéramos `flexDirection: 'row'` dentro de la propia estadística individual, el número y su etiqueta quedarían pegados en horizontal (ej. `"24 Proyectos"` en una misma línea), desvirtuando el diseño. Al colocar `row` únicamente en el padre `stats`, logramos una fila de columnas (`row` en el contenedor general y `column` natural en cada métrica hija).
+**Fundamentos técnicos:**
+1. **Gestión nativa del texto en el dispositivo:**  
+   En React Native, el componente `<TextInput />` delega la gestión del texto directamente en el componente nativo del sistema operativo (`UITextField` en iOS y `EditText` en Android). El buffer del sistema mantiene y refleja en pantalla cada carácter tecleado por el usuario de forma autónoma sin que React tenga que intervenir.
+2. **Ausencia de lógica de negocio o validación en tiempo real:**  
+   El objetivo actual es maquetar el layout visual, los estilos, la tipografía y la disposición de los elementos. Al no existir validaciones dinámicas (como comprobar el formato del email o habilitar/deshabilitar el botón según la longitud de la clave) ni peticiones de autenticación a un servidor al pulsar `"INICIAR SESIÓN"`, no se requiere ningún estado reactivo.
+3. **Eficiencia y prevención de renderizados innecesarios:**  
+   Vincular un `useState` a cada input mediante el listener `onChangeText` obligaría a React a re-renderizar todo el componente con cada pulsación de tecla. Prescindir de él en esta fase mantiene el código más conciso, limpio y con el rendimiento nativo óptimo.
 
 ## Qué he modificado
-- **Punto de entrada y estructura**:
-  - El código de la aplicación se encuentra en `src/app/index.tsx` (equivalente funcional a `App.tsx` bajo la arquitectura de Expo Router).
-- **Componente `Image` (Avatar)**:
-  - Se configuró la imagen de perfil con fuente remota (`https://i.pravatar.cc/300`), tamaño simétrico de `110x110` y esquinas redondeadas al 50% (`borderRadius: 55`) para lograr una circunferencia perfecta.
-- **Datos de perfil y jerarquía tipográfica**:
-  - Nombre `"Laura Martínez"` en tamaño 25px con peso `GoogleSansFlex_700Bold`.
-  - Cargo profesional `"Diseñadora UX/UI"` en tono slate neutro (`#64748b`) con peso regular.
-- **Contenedor y bloque de estadísticas**:
-  - Implementación del contenedor `stats` con `flexDirection: 'row'`, separación entre métricas con `gap: 36` y margen superior (`marginTop: 24`).
-  - **Ampliación con la tercera estadística (Modificación solicitada)**:
-    - Se incorporaron las 3 métricas con su respectivo valor y etiqueta:
-      1. **Proyectos**: 24
-      2. **Seguidores**: 1280
-      3. **Contactos**: 86 (añadida como modificación/reto del ejercicio).
-    - Creación del estilo `label` con color atenuado (`#64748b`), tamaño 13px y tipografía regular para diferenciar claramente el número de su título.
-- **Estilos del contenedor y tarjeta**:
-  - Fondo de pantalla cálido (`#f6e3a7ff`) para generar contraste y armonía con la tarjeta blanca.
-  - Tarjeta central con `padding: 28`, esquinas suaves (`borderRadius: 22`), centrado horizontal de elementos (`alignItems: 'center'`) y sombras suaves combinadas para Android (`elevation: 2`) e iOS (`shadow*`).
+- **Punto de entrada y archivos del proyecto**:
+  - Se crearon y sincronizaron tanto `App.tsx` en la raíz de `EJERCICIO-04` como `src/app/index.tsx`, asegurando compatibilidad completa tanto con la entrega tradicional de React Native como con Expo Router.
+- **Estructura y contenedor principal (`container`)**:
+  - `View` envolvente con `flex: 1`, centrado vertical mediante `justifyContent: 'center'`, `padding: 28` y fondo blanco (`backgroundColor: 'white'`).
+- **Encabezados y jerarquía tipográfica**:
+  - Título principal `"Bienvenido"` con `fontSize: 30` y peso `GoogleSansFlex_700Bold`.
+  - Subtítulo descriptivo `"Introduce tus datos para continuar"` con `fontSize: 18`, color slate neutro (`#64748b`), peso regular y márgenes de separación (`marginTop: 8`, `marginBottom: 28`).
+- **Campos de formulario (`TextInput`)**:
+  - Input para `"Correo electrónico"` con fondo gris suave (`#f1f5f9`), padding horizontal de 18px y vertical de 14px, bordes tipo píldora (`borderRadius: 100`), tamaño 16px y separación inferior `marginBottom: 14`.
+  - Input para `"Contraseña"` con los mismos estilos ergonómicos y la propiedad `secureTextEntry` para ofuscar los caracteres.
+- **Botón de acción principal (`Pressable`)**:
+  - Botón tipo píldora (`borderRadius: 100`) con color azul (`#2563eb`), padding interior de 16px y margen superior `marginTop: 8`.
+  - Etiqueta interior `"INICIAR SESIÓN"` centrada, en blanco y peso en negrita.
+- **Enlace de registro secundario**:
+  - Texto inferior `"¿No tienes cuenta? Regístrate"` centrado, color azul corporativo (`#2563eb`), `fontSize: 16` y margen superior de 20px para guiar al usuario a la acción alternativa.
 
 ## Resultado
-La interfaz muestra una ficha de perfil elegante, limpia y perfectamente equilibrada en el centro de la pantalla sobre un fondo cálido:
-1. **Avatar destacado**: En la parte superior luce la foto de perfil circular sin deformaciones de aspecto.
-2. **Identidad**: Justo debajo se lee el nombre en negrita y el rol profesional en tono secundario.
-3. **Métricas en fila**: En la base de la tarjeta se sitúan las tres estadísticas alineadas en fila horizontal mediante `flexDirection: 'row'`. Cada métrica presenta una estructura clara y legible de dos niveles (número grande en negrita arriba y etiqueta descriptiva debajo), con separación uniforme y sin tocar los bordes de la tarjeta.
+La interfaz muestra una pantalla de acceso moderna, elegante y equilibrada:
+1. **Encabezado directo**: Título `"Bienvenido"` destacado y subtítulo en tono secundario que contextualizan la acción.
+2. **Inputs ergonómicos**: Dos campos de texto con diseño envolvente tipo píldora y fondos neutros que contrastan con claridad, ofreciendo privacidad en la contraseña gracias a `secureTextEntry`.
+3. **Llamada a la acción visual**: Un botón azul sobresaliente con texto en mayúsculas negrita que actúa como punto focal de la pantalla.
+4. **Acceso alternativo**: Un enlace inferior limpio y proporcionado para usuarios que requieran registrarse.
