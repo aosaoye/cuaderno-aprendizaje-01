@@ -65,7 +65,7 @@ export default function App() {
           <Text style={styles.user}>Laura</Text>
         </View>
         <View style={styles.headerButton}>
-          <Bell size={20} color="#0f172a" strokeWidth={1.8} />
+          <Bell size={35} color="#0f172a" strokeWidth={1.2} />
         </View>
       </View>
 
@@ -190,7 +190,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#64748b',
     fontFamily: 'GoogleSansFlex_400Regular',
-    marginBottom: 2,
   },
   user: {
     fontSize: 34,
@@ -199,10 +198,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   headerButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#f0f4f9',
     alignItems: 'center',
     justifyContent: 'center',
   },
