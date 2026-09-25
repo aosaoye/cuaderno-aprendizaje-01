@@ -17,3 +17,7 @@ Al completar con éxito cualquier tarea, requerimiento, refactorización o soluc
    - Ejecutar `git push` para sincronizar la rama actual con el repositorio remoto de GitHub de forma automática.
 4. **Notificación al usuario**:
    - Indicar brevemente al usuario en la respuesta final el commit realizado, el mensaje asignado, su hash y la confirmación del push a GitHub.
+
+## Arquitectura Expo Router vs App.tsx
+- Este repositorio utiliza exclusivamente la arquitectura de **Expo Router** (`src/app/index.tsx`, `src/app/_layout.tsx`, etc.).
+- **REGLA ESTRICTA**: Queda terminantemente PROHIBIDO crear, modificar o mantener archivos `App.tsx` en la raíz de cualquier ejercicio, incluso si el texto genérico de la rúbrica o enunciado menciona `App.tsx`. Todo el código debe residir única y exclusivamente en `src/app/index.tsx`, a menos que el usuario lo solicite con confirmación expresa.

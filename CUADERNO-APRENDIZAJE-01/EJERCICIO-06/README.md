@@ -36,9 +36,8 @@ Un ancho del **48% es mucho más práctico que el 50%** debido a la matemática 
    - A diferencia de la web donde es habitual recurrir a expresiones como `calc(50% - 6px)`, en React Native usar un porcentaje ligeramente inferior como `48%` es una solución limpia, rápida, compatible y que evita sobrecargas de cálculo dinámico.
 
 ## Qué he modificado
-- **Punto de entrada y archivos sincronizados**:
-  - `App.tsx`: Actualizado con el código completo del dashboard incluyendo el ejemplo trabajado y la modificación solicitada.
-  - `src/app/index.tsx`: Sincronizado para mantener la consistencia con la navegación y carga de fuentes de Expo Router.
+- **Punto de entrada y estructura**:
+  - `src/app/index.tsx`: Implementación del dashboard bajo Expo Router con integración de layout y carga de tipografías (*Google Sans Flex*). Se prescinde de `App.tsx` manteniendo la arquitectura nativa del proyecto.
 - **Componente reutilizable `Metric`**:
   - Se implementó el componente funcional `Metric` tipado con TypeScript `{ title: string; value: string }`, renderizando la etiqueta descriptiva y el valor principal en una tarjeta visual estilizada.
 - **Incorporación de la modificación solicitada (Quinta métrica)**:
