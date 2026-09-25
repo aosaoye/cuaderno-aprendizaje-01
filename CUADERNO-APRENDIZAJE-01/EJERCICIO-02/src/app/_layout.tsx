@@ -1,11 +1,11 @@
 import { Stack } from "expo-router";
 import {
   useFonts,
-  SpaceGrotesk_700Bold,
-  SpaceGrotesk_400Regular,
-  SpaceGrotesk_500Medium,
-  SpaceGrotesk_600SemiBold,
-  SpaceGrotesk_300Light
+  GoogleSansFlex_700Bold,
+  GoogleSansFlex_600SemiBold,
+  GoogleSansFlex_500Medium,
+  GoogleSansFlex_400Regular,
+  GoogleSansFlex_300Light
 } from "@expo-google-fonts/dev"
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -15,11 +15,11 @@ import * as SplashScreen from "expo-splash-screen";
 export default function RootLayout() {
 
    const [fontLoaded, fontError] = useFonts({
-    SpaceGrotesk_700Bold,
-    SpaceGrotesk_400Regular,
-    SpaceGrotesk_500Medium,
-    SpaceGrotesk_600SemiBold,
-     SpaceGrotesk_300Light
+    GoogleSansFlex_700Bold,
+    GoogleSansFlex_600SemiBold,
+    GoogleSansFlex_500Medium,
+    GoogleSansFlex_400Regular,
+    GoogleSansFlex_300Light
   });
 
 

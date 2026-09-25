@@ -1,56 +1,39 @@
-# Welcome to your Expo app 👋
+# Ejercicio 01 - Mi primera pantalla
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Qué he aprendido
+- La estructura y jerarquía básica de una aplicación React Native: `View → Text → StyleSheet`.
+- El rol de `View` como contenedor visual y estructural, y de `Text` como componente imprescindible para mostrar cualquier cadena de texto.
+- Cómo definir y organizar estilos como objetos JavaScript mediante la API `StyleSheet.create()`.
+- El uso de **Flexbox** para el posicionamiento y maquetación en pantallas móviles:
+  - `flex: 1`: Hace que el contenedor principal ocupe todo el espacio disponible de la pantalla.
+  - `justifyContent: 'center'`: Centra los componentes hijos en el eje principal (vertical por defecto en React Native).
+  - `alignItems: 'center'`: Centra los componentes hijos en el eje transversal (horizontal).
+- Cómo establecer una jerarquía visual clara (diferenciando título y subtítulo en peso y tamaño) y la incorporación de tipografías personalizadas (`Space Grotesk`) en Expo.
 
-## Get started
+## Respuesta a la pregunta de comprensión
+Explica con tus palabras la diferencia entre el componente `View` y el componente `Text`.
 
-1. Install dependencies
+**Respuesta:**  
+La diferencia principal radica en su función estructural dentro del árbol de componentes nativo:
 
-   ```bash
-   npm install
-   ```
+- **`View`**: Es el componente contenedor visual fundamental de React Native (el equivalente a un `<div>` en la web). Su propósito es agrupar otros componentes, definir la estructura del layout mediante Flexbox y aplicar estilos del modelo de caja (fondos, bordes, márgenes y paddings). En React Native, un `View` **no puede contener texto plano directamente como string**; si se coloca texto sin envolver dentro de un `View`, la aplicación generará un error en tiempo de ejecución.
+- **`Text`**: Es el único componente primitivo encargado de renderizar caracteres y texto en pantalla (equivalente a un `<p>` o `<span>`). Cualquier texto visible en una app debe estar obligatoriamente dentro de una etiqueta `<Text>`. Además, admite propiedades tipográficas exclusivas (`fontSize`, `fontWeight`, `fontFamily`, `color`, `letterSpacing`, `lineHeight`) y permite anidarse con otros elementos `Text` para aplicar estilos en línea con herencia tipográfica.
 
-2. Start the app
+## Qué he modificado
+- **Estructura base de componentes**:
+  - Se configuró el contenedor principal `View` con `flex: 1`, `justifyContent: 'center'` y `alignItems: 'center'` para centrar el contenido en ambos ejes.
+  - Se definieron el título principal (`"React Native"`) y el subtítulo (`"Mi primera pantalla"`).
+- **Resolución del reto**:
+  - Se añadió la tercera línea requerida con el texto exacto `"Curso 2026/27"` sin romper el centrado del contenedor.
+- **Estilos personalizados conservados**:
+  - Se mantuvieron los estilos propios: color de fondo claro (`#fff7ddff`), jerarquía tipográfica con la fuente *Space Grotesk*, tamaños proporcionados (`48px` para el título, `24px` para el subtítulo y `18px` para el reto) y color de acento ocre/dorado (`#9a7e20ff`).
+- **Punto de entrada y estructura**:
+  - `src/app/index.tsx`: Pantalla principal y punto de entrada de la aplicación bajo Expo Router.
 
-   ```bash
-   npx expo start
-   ```
+## Resultado
+La interfaz muestra una pantalla limpia y armónica sobre un fondo claro en tono crema suave (`#fff7ddff`). Los elementos aparecen perfectamente centrados en ambos ejes (vertical y horizontal):
+1. **React Native**: Título de gran impacto visual (48px) con un trazo ligero.
+2. **Mi primera pantalla**: Subtítulo secundario con tipografía *Space Grotesk* (24px).
+3. **Curso 2026/27**: Tercera línea correspondiente al reto, destacada en semibold y color ocre (`#9a7e20ff`).
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+El título destaca claramente sobre los subtítulos, los tres textos quedan alineados en el centro geométrico de la pantalla y se cumplen al 100% las condiciones y checkpoints de la rúbrica.
