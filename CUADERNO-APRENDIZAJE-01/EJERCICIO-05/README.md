@@ -29,8 +29,8 @@ El **nombre del producto** debe tener la **mayor jerarquía visual**, seguido mu
    La categoría (`"AUDIO"`) aporta contexto de clasificación en el catálogo, pero rara vez es el factor que define la compra de ese artículo individual. Por esta razón, debe mostrarse de manera discreta (tamaño más reducido o estilo sobrio) para organizar la información sin robar la atención que merecen el nombre y el precio.
 
 ## Qué he modificado
-- **Punto de entrada y archivos del proyecto**:
-  - Se crearon y alinearon tanto `App.tsx` en la raíz de `EJERCICIO-05` como `src/app/index.tsx`, ofreciendo compatibilidad completa tanto con la arquitectura tradicional de React Native como con Expo Router.
+- **Punto de entrada y estructura**:
+  - El código de la aplicación se encuentra en `src/app/index.tsx` bajo la arquitectura de Expo Router.
 - **Estructura y tarjeta contenedora**:
   - Pantalla centrada (`justifyContent: 'center'`) sobre un fondo gris neutro moderno (`#f8fafc`).
   - Tarjeta blanca con esquinas redondeadas (`borderRadius: 20`), recorte estricto de desbordamiento (`overflow: 'hidden'`) y sombras suaves combinadas para Android (`elevation: 2`) e iOS (`shadowColor`, `shadowOpacity`, etc.).
