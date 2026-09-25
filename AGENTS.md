@@ -1,6 +1,6 @@
 # Reglas del Asistente y Flujo de Trabajo Git
 
-## Commits Automáticos
+## Commits y Push Automáticos
 Al completar con éxito cualquier tarea, requerimiento, refactorización o solución a un problema solicitado por el usuario:
 1. **Verificar el estado del repositorio**:
    - Comprobar los archivos modificados (`git status`).
@@ -13,5 +13,7 @@ Al completar con éxito cualquier tarea, requerimiento, refactorización o soluc
      - `refactor: ...` para refactorizaciones o mejoras de código.
      - `docs: ...` para cambios en documentación o README.
      - `chore: ...` para configuraciones, dependencias o tareas de mantenimiento.
-3. **Notificación al usuario**:
-   - Indicar brevemente al usuario en la respuesta final el commit realizado, el mensaje asignado y su hash.
+3. **Subir cambios al repositorio remoto**:
+   - Ejecutar `git push` para sincronizar la rama actual con el repositorio remoto de GitHub de forma automática.
+4. **Notificación al usuario**:
+   - Indicar brevemente al usuario en la respuesta final el commit realizado, el mensaje asignado, su hash y la confirmación del push a GitHub.
