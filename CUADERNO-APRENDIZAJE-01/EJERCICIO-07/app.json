@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Challenge06",
-    "slug": "Challenge06",
+    "name": "Challenge07",
+    "slug": "Challenge07",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "challenge06",
+    "scheme": "challenge07",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
