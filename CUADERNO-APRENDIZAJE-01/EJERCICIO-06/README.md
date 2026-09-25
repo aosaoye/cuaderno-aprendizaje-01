@@ -1,53 +1,60 @@
-# Ejercicio 06 - Cuadrícula de métricas (Dashboard)
+# Ejercicio 06 - Dashboard de métricas
 
 ## Qué he aprendido
-- **Diseño de cuadrículas (*grids*) con Flexbox**:
-  - En React Native no existe CSS Grid nativo (`display: grid`), por lo que las distribuciones bidimensionales (filas y columnas) se construyen combinando `flexDirection: 'row'` con `flexWrap: 'wrap'`.
-  - La propiedad `flexWrap: 'wrap'` permite que los elementos hijos que superen el ancho del contenedor salten automáticamente a una nueva línea o fila.
-  - Uso de porcentajes en dimensiones (`width: '48%'`) junto con la propiedad `gap: 12` para calcular automáticamente una distribución limpia de 2 columnas por fila, asegurando responsividad en pantallas de distintos tamaños.
-- **Modularización y componentes reutilizables con Props**:
-  - Extracción y tipado con TypeScript del componente modular `<Metric title="..." value="..." change="..." />` (`{ title: string; value: string; change: string }`), evitando duplicación de código (principio DRY).
-  - Encapsulación de estilos específicos de la tarjeta métrica (`card`, `label`, `value`, `change`) dentro del componente reutilizable.
-- **Jerarquía y diseño de paneles ejecutivos (Dashboards)**:
-  - Estructuración de cabecera visual con título jerárquico (`Dashboard`) y subtítulo descriptivo (`Resumen del negocio`).
-  - Presentación clara de KPIs (indicadores clave de rendimiento): etiqueta descriptiva en tono neutro (`#64748b`), valor numérico destacado en negrita y métrica de tendencia porcentual con código cromático positivo (`#16a34a`).
-- **Profundidad visual y coherencia tipográfica**:
-  - Integración de elevación y sombras suaves (`elevation: 2` para Android y `shadow*` para iOS) sobre un fondo neutro moderno (`#f8fafc`).
-  - Empleo de la familia tipográfica *Google Sans Flex* (`GoogleSansFlex_700Bold` y `GoogleSansFlex_400Regular`) garantizando consistencia estética con los ejercicios anteriores.
+- **Construcción de cuadrículas (*grids*) con Flexbox**:
+  - En React Native no existe soporte para `display: grid` nativo de CSS web, por lo que las distribuciones bidimensionales (filas y columnas) se construyen mediante Flexbox combinando `flexDirection: 'row'` con `flexWrap: 'wrap'`.
+  - La propiedad `flexWrap: 'wrap'` es imprescindible para permitir que los elementos secundarios que exceden el ancho horizontal del contenedor salten automáticamente a una nueva fila.
+  - Uso de la propiedad moderna `gap: 12` para gestionar de forma nativa e integrada el espacio uniforme entre elementos hijos, tanto a lo largo del eje principal como del secundario, sin requerir márgenes manuales complejos.
+- **Interacción entre anchos porcentuales y espaciados fijos**:
+  - Comprensión de las restricciones matemáticas del modelo de caja (*box model*) en Flexbox: la suma de los anchos de los elementos más los espaciados en píxeles no puede superar el 100% del contenedor padre si queremos que permanezcan en la misma fila.
+  - Aplicación de porcentajes adaptativos (`width: '48%'`) para reservar el margen necesario que absorba la separación (`gap`) entre columnas de forma responsiva en diferentes pantallas.
+- **Componentes modulares y reutilizables con TypeScript**:
+  - Creación del componente modular `<Metric title="..." value="..." />` tipado estrictamente con TypeScript (`{ title: string; value: string }`).
+  - Aplicación del principio DRY (*Don't Repeat Yourself*): encapsulación de la estructura visual y de los estilos de la tarjeta métrica (`card`, `label`, `value`) en un único componente reutilizable.
+- **Jerarquía visual y diseño de Dashboards**:
+  - Presentación clara y legible de KPIs (*Key Performance Indicators*): título destacado en gran formato (32px), etiquetas descriptivas en tono neutro (`#64748b`) y valores métricos destacados con peso en negrita.
+  - Implementación de profundidad con sombras suaves (`elevation: 1` en Android y propiedades `shadow*` en iOS) sobre fondo neutro (`#f8fafc`).
 
 ## Respuesta a la pregunta de comprensión
-¿Por qué es necesario usar la propiedad `flexWrap: 'wrap'` junto con `flexDirection: 'row'` para construir una cuadrícula (*grid*) de tarjetas y qué ocurriría si no la incluyéramos?
+¿Por qué un ancho del 48% puede ser más práctico que 50% cuando además existe separación entre tarjetas?
 
-**Respuesta:**  
-Por defecto en Flexbox, la propiedad `flexWrap` tiene el valor `'nowrap'`. Esto significa que todos los elementos secundarios intentan comprimirse y encajarse obligatoriamente dentro de una **única línea** a lo largo del eje principal.
+Respuesta:
+Un ancho del **48% es mucho más práctico que el 50%** debido a la matemática de cálculo de espacio de Flexbox cuando conviven dimensiones relativas (porcentajes) con separaciones de tamaño fijo (`gap` o márgenes):
 
-Si configuramos `flexDirection: 'row'` pero **no** indicamos `flexWrap: 'wrap'`:
-1. **Compresión y desbordamiento**: Aunque a cada tarjeta se le asigne `width: '48%'`, Flexbox intentará forzar a las cuatro tarjetas a compartir una sola fila horizontal.
-2. **Deformación visual**: Como el ancho acumulado de las cuatro tarjetas supera el 100% del contenedor (4 × 48% = 192%), los elementos o bien se comprimen perdiendo sus dimensiones definidas y deformando el texto, o bien se desbordan horizontalmente saliéndose de los márgenes visibles de la pantalla.
+1. **El problema de usar un 50% con separación:**
+   - Si asignamos a cada tarjeta un `width: '50%'`, la suma base de dos tarjetas ocupa exactamente el **100%** del ancho disponible del contenedor padre ($50\% + 50\% = 100\%$).
+   - Al introducir cualquier tipo de separación entre tarjetas (como `gap: 12` o márgenes horizontales), el ancho total requerido para ubicar dos tarjetas en una misma fila excede el límite del contenedor:
+     $$\text{Ancho total en la fila} = 50\% + 50\% + \text{gap} = 100\% + 12\text{px} > 100\%$$
+   - Como el contenedor no dispone de más del 100% de su espacio disponible, Flexbox (al tener activado `flexWrap: 'wrap'`) no tiene espacio para alojar la segunda tarjeta en la misma línea. Por tanto, **fuerza el salto de línea prematuro**: cada tarjeta pasará a ocupar una fila completa individual, rompiendo la cuadrícula de dos columnas deseada.
 
-Al aplicar **`flexWrap: 'wrap'`**:
-- Flexbox evalúa el espacio disponible en la fila actual: coloca la primera tarjeta (48%) y la segunda (48%) con su respectivo espaciado (`gap: 12`).
-- Al llegar a la tercera tarjeta y comprobar que excede el ancho disponible del contenedor en esa línea, **rompe la línea y la traslada automáticamente a una nueva fila inferior**, repitiendo el proceso para la cuarta tarjeta.
-- De este modo, se consigue un **layout de cuadrícula responsivo 2x2** limpio, adaptativo y perfectamente alineado.
+2. **La ventaja práctica del 48%:**
+   - Al definir `width: '48%'`, dos tarjetas consumen juntas el **96%** del ancho del contenedor ($48\% + 48\% = 96\%$).
+   - Ese **4% restante queda libre como margen de tolerancia** para absorber sin desbordarse el valor absoluto de la separación (`gap: 12` o márgenes).
+   - Dado que $48\% + 48\% + 12\text{px} \le 100\%$ en prácticamente cualquier pantalla móvil estándar, el contenedor puede ubicar perfectamente **dos tarjetas por fila de manera responsiva**.
+
+3. **Simplicidad frente a cálculos complejos:**
+   - A diferencia de la web donde es habitual recurrir a expresiones como `calc(50% - 6px)`, en React Native usar un porcentaje ligeramente inferior como `48%` es una solución limpia, rápida, compatible y que evita sobrecargas de cálculo dinámico.
 
 ## Qué he modificado
-- **Punto de entrada y archivos del proyecto**:
-  - Creación de `App.tsx` en la raíz de `EJERCICIO-06` para dar cumplimiento íntegro a los requisitos de entrega del repositorio y compatibilidad con el entorno de pruebas de React Native.
-  - Implementación alineada en `src/app/index.tsx` bajo Expo Router, garantizando integración con el layout y carga de tipografías.
-- **Componente modular `Metric`**:
-  - Declaración del componente funcional `Metric` tipado con TypeScript para renderizar de manera limpia y declarativa las cuatro tarjetas de negocio:
-    1. **Ventas**: 12.450 € (+12%)
-    2. **Clientes**: 348 (+8%)
-    3. **Pedidos**: 1.024 (+18%)
-    4. **Conversión**: 7,4% (+2%)
-- **Diseño del contenedor Grid y Tarjetas**:
-  - Contenedor con `flexDirection: 'row'`, `flexWrap: 'wrap'` y separación uniforme de `gap: 12`.
-  - Tarjetas al `width: '48%'`, fondo blanco puro (`#ffffff`), `borderRadius: 16`, padding interior de 18px y sombras multiplataforma (`elevation: 2` en Android y `shadow*` en iOS).
-  - Tipografía enriquecida con *Google Sans Flex* (`GoogleSansFlex_700Bold` para títulos, valores e incrementos, y `GoogleSansFlex_400Regular` para subtítulos y etiquetas descriptivas).
-  - Código cromático en el porcentaje de cambio en verde éxito (`#16a34a`) para indicar crecimiento favorable del negocio.
+- **Punto de entrada y archivos sincronizados**:
+  - `App.tsx`: Actualizado con el código completo del dashboard incluyendo el ejemplo trabajado y la modificación solicitada.
+  - `src/app/index.tsx`: Sincronizado para mantener la consistencia con la navegación y carga de fuentes de Expo Router.
+- **Componente reutilizable `Metric`**:
+  - Se implementó el componente funcional `Metric` tipado con TypeScript `{ title: string; value: string }`, renderizando la etiqueta descriptiva y el valor principal en una tarjeta visual estilizada.
+- **Incorporación de la modificación solicitada (Quinta métrica)**:
+  - Sobre las cuatro métricas base del ejemplo (*Ventas: 12.450 €*, *Clientes: 348*, *Pedidos: 1.024*, *Conversión: 7,4%*), se añadió la **quinta tarjeta de métrica**:
+    ```tsx
+    <Metric title="Tickets" value="60" />
+    ```
+  - Esta modificación permite comprobar de forma visual el funcionamiento de `flexWrap: 'wrap'`, verificando cómo la quinta tarjeta salta automáticamente a una tercera fila y se sitúa en la columna izquierda con su ancho del 48%.
+- **Estilos y contenedor Grid**:
+  - Contenedor `.grid` configurado con `flexDirection: 'row'`, `flexWrap: 'wrap'` y `gap: 12`.
+  - Tarjetas `.card` con `width: '48%'`, fondo blanco (`#ffffff`), esquinas redondeadas (`borderRadius: 16`), relleno interior de 18px y sombra sutil con elevación multiplataforma.
+  - Título `"Dashboard"` con `fontSize: 32`, tipografía *Google Sans Flex Bold* y margen inferior de 24px para aportar aire y separación jerárquica con el contenido.
 
 ## Resultado
-La interfaz muestra un dashboard ejecutivo moderno, claro y equilibrado:
-1. **Encabezado**: Título "Dashboard" en gran escala (32px) con su subtítulo descriptivo "Resumen del negocio" en tono gris slate.
-2. **Cuadrícula 2x2**: Las cuatro métricas organizadas en dos filas equilibradas de dos columnas cada una, con separación proporcional sin desbordamientos laterales.
-3. **Legibilidad de datos**: Cada tarjeta destaca de un solo vistazo el nombre del KPI, el valor cuantitativo principal y la tasa de variación positiva, proporcionando una experiencia móvil nativa óptima.
+La interfaz muestra un panel de control (Dashboard) limpio, moderno y responsivo:
+1. **Encabezado principal**: Título `"Dashboard"` con tipografía clara y destacada en la parte superior.
+2. **Distribución en cuadrícula 2x2**: Las primeras cuatro métricas (*Ventas*, *Clientes*, *Pedidos*, *Conversión*) se organizan simétricamente en dos filas de dos tarjetas cada una, con una separación uniforme de 12px entre ellas.
+3. **Comportamiento envolvente de la modificación**: La quinta tarjeta solicitada (*Tickets: 60*) salta automáticamente a una tercera fila gracias a `flexWrap: 'wrap'`, ubicándose limpiamente en la columna izquierda respetando la proporción y el radio de las tarjetas anteriores.
+4. **Acabado nativo**: El fondo gris neutro (`#f8fafc`) resalta las tarjetas blancas y sus sombras sutiles, logrando una estética profesional lista para producción móvil.
